@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="xmlspec.xsl" type="text/xsl"?>
+<?xml-stylesheet href="xmlspec.fos" type="text/x-fosi" media="editor" alternate="yes"?>
+<!--Arbortext, Inc., 1988-2008, v.4002-->
+<!DOCTYPE spec PUBLIC "-//W3C//DTD Specification V2.10//EN"
+ "xmlspec.dtd" [
+<!ENTITY doc.type "NOTE">
+<!ENTITY short.name "xml-model">
+<!ENTITY iso.doc.date "20100415">
+<!ENTITY draft.day "15">
+<!ENTITY draft.month "April">
+<!ENTITY draft.year "2010">
+<!ENTITY XMLspec "http://www.w3.org/TR/XML/">
+<!ENTITY ASSOCSSspec "http://www.w3.org/XML/2009/12/xml-stylesheet/">
+<!ENTITY ASSOCCSSspec-pubdate "4 December 2009">
+<!ENTITY % local.label.pcd.mix " | termref">
+<!ENTITY % local.emph.class " | code">
+]>
+<spec status="final" w3c-doctype="wgnote" xml:lang="en"><?Pub Caret?>
+<header>
+<title>Associating Schemas with XML documents</title>
+<version>1.0 (First Edition)</version>
+<w3c-designation>&doc.type;-&short.name;-&iso.doc.date;</w3c-designation>
+<w3c-doctype>W3C Working Group Note</w3c-doctype>
+<pubdate><day>&draft.day;</day><month>&draft.month;</month><year>&draft.year;</year>
+</pubdate>
+<publoc> <loc
+href="http://www.w3.org/TR/&draft.year;/&doc.type;-&short.name;-&iso.doc.date;/"
+>http://www.w3.org/TR/&draft.year;/&doc.type;-&short.name;-&iso.doc.date;/</loc
+> </publoc>
+<altlocs><loc href="xml-model.xml">XML</loc></altlocs>
+<latestloc><loc href="http://www.w3.org/TR/&short.name;/">http://www.w3.org/TR/&short.name;/</loc>
+</latestloc>
+<authlist>
+<author><name>Paul Grosso</name><affiliation>PTC/Arbortext</affiliation>
+<email href="mailto:pgrosso@ptc.com">pgrosso@ptc.com</email></author>
+<author><name>Jirka Kosek</name><email href="mailto:jirka@kosek.cz"
+>jirka@kosek.cz</email></author>
+</authlist>
+<abstract>
+<p>This document allows schemas using any schema definition language
+to be associated with an XML document by including one or more processing
+instructions with a target of <code>xml-model</code> in the document's
+prolog.</p>
+</abstract>
+<status>
+<p><emph> This section describes the status of this document at the
+time of its publication. Other documents may supersede this document.
+A list of current W3C publications and the latest revision of this
+technical report can be found in the <loc href="http://www.w3.org/TR/"
+>W3C technical reports index</loc> at http://www.w3.org/TR/. </emph
+></p>
+<p>This is the first publication of this document as a Working Group
+Note. This document is a product of the <loc
+href="http://www.w3.org/XML/Core/">XML Core Working Group</loc> as
+part of the <loc href="http://www.w3.org/XML/Activity.html">W3C XML
+Activity</loc>. The English version of this specification is the only
+normative version. However, for translations of this document, see <loc
+href="http://www.w3.org/2003/03/Translations/byTechnology?technology=xml-model"
+> http://www.w3.org/2003/03/Translations/byTechnology?technology=xml-model</loc
+>. </p>
+<p>Several earlier versions of this document were made available for
+public review. The most recent previous public version dated 15 March
+2010 is at <loc href="http://www.w3.org/XML/2010/01/xml-model/">http://www.w3.org/XML/2010/01/xml-model/</loc
+>.</p>
+<p> Please submit any comments on this document to <loc
+href="mailto:xml-editor@w3.org">xml-editor@w3.org</loc>; public <loc
+href="http://lists.w3.org/Archives/Public/xml-editor/">archives</loc
+> are available.</p>
+<!--<p>The errata list for this document is available at 
+<loc href="http://www.w3.org/XML/2010/xml-model-errata">
+http://www.w3.org/XML/2010/xml-model-errata</loc>.</p>
+-->
+<!--
+<p>
+Known implementations are documented in @@@....
+A test suite is also available ....
+</p>
+-->
+<p>Publication as a Working Group Note does not imply endorsement
+by the W3C Membership. This is a draft document and may be updated,
+replaced, or obsoleted by other documents at any time. It is inappropriate
+to cite this document as other than work in progress.</p>
+<p>However, this specification is being jointly developed by W3C and
+ISO/IEC JTC1/SC34. The technical content of this specification and
+that of ISO/IEC 19757-11 is expected to be identical, so the basic
+content of this WG Note may be&#x2014;or may become&#x2014;referenceable
+in another form.</p>
+<p>This document was produced by a group operating under the <loc
+href="http://www.w3.org/Consortium/Patent-Policy-20040205/"
+xlink:actuate="onRequest" xlink:show="replace" xlink:type="simple"
+xmlns:xlink="http://www.w3.org/1999/xlink">5 February 2004 W3C Patent
+Policy</loc>. W3C maintains a <loc
+href="http://www.w3.org/2004/01/pp-impl/18796/status#disclosures"
+role="disclosure" xlink:actuate="onRequest" xlink:show="replace"
+xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink">public
+list of any patent disclosures</loc> made in connection with the deliverables
+of the group; that page also includes instructions for disclosing
+a patent. An individual who has actual knowledge of a patent which
+the individual believes contains <loc
+href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential"
+xlink:actuate="onRequest" xlink:show="replace" xlink:type="simple"
+xmlns:xlink="http://www.w3.org/1999/xlink">Essential Claim(s)</loc
+> must disclose the information in accordance with <loc
+href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure"
+xlink:actuate="onRequest" xlink:show="replace" xlink:type="simple"
+xmlns:xlink="http://www.w3.org/1999/xlink">section 6 of the W3C Patent
+Policy</loc>.</p>
+</status>
+<langusage>
+<language id="en">English</language>
+<language id="ebnf">Extended Backus-Naur Form (formal grammar)</language>
+</langusage>
+<revisiondesc>
+<slist>
+<sitem>Original, based on Associating Stylesheets and Jirka's draft,
+PBG, 2009-12-22 through 2010-01-04</sitem>
+<sitem>Minor edits given comments to date, PBG, 2010-01-13</sitem>
+<sitem>Further minor edits given comments to date and producing a
+WG Note-ready draft, PBG, 2010-04-07</sitem>
+</slist>
+</revisiondesc>
+</header>
+<body>
+<div1 id="introduction">
+<head> Introduction</head>
+<p><emph>(This section is non-normative.)</emph></p>
+<p>There are several document schema definition languages in common
+use today that can be used to specify one or more validation processes
+performed against Extensible Markup Language (XML) documents. Some
+schema languages provide their own syntax for associating schemas
+with documents (DTD, W3C XML Schema) and some languages (RELAX NG,
+Schematron) do not provide schema association mechanisms at all. The
+purpose of this specification is to define a common, schema-agnostic
+syntax for associating schema documents written in any schema definition
+language with a given XML document.</p>
+<p>This specification defines the syntax and processing expectations
+for an xml-model processing instruction. Such processing instructions
+associate one or more schemas with the XML document in which they
+are present. The associated schemas may be written in any schema definition
+language. Applications can use the associated schemas for any purpose
+including those such as document validation, content completion in
+interactive editors, or creating models for data binding. Presence
+of an xml-model processing instruction is not in itself an instruction
+to any processor to validate the document, nor is it a statement that
+the document is not to be processed without validation. It is a declarative
+statement of a relationship between the document and one or more external
+schemas.<ednote diff="add" id="ednote5"><name>PBG</name><date>2010-03-15</date>
+<edtext>The previous two sentences address <loc
+href="http://www.w3.org/XML/2010/02/xml-model-comments.html#issue-5"
+>ISSUE-5</loc></edtext></ednote></p>
+<p>It should be noted that this specification is not meant as a replacement
+for other technologies that provide more general and indirect schema
+association features like NVDL and XProc. This specification is complementary
+technology which can be used when it is necessary to store ad-hoc
+schema associations directly inside XML document.<ednote diff="add"
+id="ednote4"><name>PBG</name><date>2010-03-15</date><edtext>This paragraph
+addresses <loc
+href="http://www.w3.org/XML/2010/02/xml-model-comments.html#issue-4"
+>ISSUE-4</loc></edtext></ednote></p>
+</div1>
+<div1 id="conformance-requirements">
+<head> Conformance requirements</head>
+<p>All diagrams, examples, and notes in this specification are non-normative,
+as are all sections explicitly marked non-normative. Everything else
+in this specification is normative.</p>
+<p>The key words <rfc2119>must</rfc2119>, <rfc2119>must not</rfc2119
+>, <rfc2119>should</rfc2119>, <rfc2119>should not</rfc2119> and <rfc2119
+>may</rfc2119> in the normative parts of this document are to be interpreted
+as described in RFC 2119. These words do not appear in all uppercase
+letters in this specification <bibref ref="rfc2119"/>.</p>
+<glist>
+<gitem><label>Documents</label>
+<def>
+<p>A document is considered to conform to this specification if it
+satisfies all <rfc2119>must</rfc2119>-level criteria in this specification
+that apply to documents.</p>
+</def></gitem>
+<gitem><label>xml-model processors</label>
+<def>
+<p>XML defines an <xtermref href="&XMLspec;#dt-app">application</xtermref
+> as a software module which receives the information content of an
+XML document from an <xtermref href="&XMLspec;#dt-xml-proc">XML processor</xtermref
+>. <termdef id="dt-xml-model-processor" term="xml-model processor"
+>An <term>xml-model processor</term> is such an application which
+processes XML <xtermref href="&XMLspec;#sec-pi">processing instructions</xtermref
+> in accordance with this specification.</termdef> </p>
+<p>An <termref def="dt-xml-model-processor">xml-model processor</termref
+> <rfc2119>may</rfc2119> be part of a larger XML application, or <rfc2119
+>may</rfc2119> function independently. In either case, <termdef
+id="dt-application" term="application">an <term>application</term
+> is the consumer of the pseudo-attribute information defined in this
+specification.</termdef></p>
+<p>An <termref def="dt-xml-model-processor">xml-model processor</termref
+> is considered to be a conforming <termref def="dt-xml-model-processor"
+>xml-model processor</termref> if it satisfies all <rfc2119>must</rfc2119
+>-level criteria in this specification that apply to <termref
+def="dt-xml-model-processor">xml-model processors</termref>; <termref
+def="dt-xml-model-processor">xml-model processors</termref> do not
+have to check or enforce any of the constraints on documents.</p>
+</def></gitem>
+</glist>
+<p>This specification is defined with reference to the vocabulary
+for XML provided by the XML Information Set as well as the <xtermref
+href="&ASSOCSSspec;#dt-parsing">rules for parsing pseudo-attributes
+from a string</xtermref> as defined in the Associating Style Sheets
+with XML documents Recommendation <bibref ref="assocss"/>.</p>
+<p>The productions in this specification use the same notation as
+used in the XML Recommendation. Tokens in the grammar and terms used
+in this specification that are not defined in this specification are
+defined in the XML Recommendation <bibref ref="xml"/> or the Associating
+Style Sheets <bibref ref="assocss"/> Recommendation.</p>
+</div1>
+<div1 id="the-xml-model-processing-instruction">
+<head>The xml-model processing instruction</head>
+<p><termdef id="dt-potential-xml-model"
+term="potential xml-model processing instruction">A processing instruction
+information item is said to be a <term>potential xml-model processing
+instruction</term> if it has the [target] property <code>xml-model</code
+> and it is in the [children] property of a document information item
+and appears before the element information item of the document information
+item's [children] property.</termdef></p>
+<p>For such <termref def="dt-potential-xml-model">potential xml-model
+processing instructions</termref>, <termref def="dt-xml-model-processor"
+>xml-model processors</termref> <rfc2119>must</rfc2119> report to
+the <termref def="dt-application">application</termref> the <xtermref
+href="&ASSOCSSspec;#dt-parsing-result">parsing result</xtermref> of
+invoking the <xtermref href="&ASSOCSSspec;#dt-parsing">rules for parsing
+pseudo-attributes from a string</xtermref>, using the processing instruction
+information item's [content] property as the string.</p>
+<p><termdef id="dt-xml-model" term="xml-model processing instruction"
+>A <termref def="dt-potential-xml-model">potential xml-model processing
+instruction</termref> is said to be an <term>xml-model processing
+instruction</term> if the <xtermref
+href="&ASSOCSSspec;#dt-parsing-result">parsing result</xtermref> is
+not an error when invoking the <xtermref href="&ASSOCSSspec;#dt-parsing"
+>rules for parsing pseudo-attributes from a string</xtermref>, using
+the processing instruction information item's [content] property as
+the string.</termdef></p>
+<p>Documents <rfc2119>must not</rfc2119> use processing instruction
+information items with the [target] property <code>xml-model</code
+> if they are not <termref def="dt-xml-model">xml-model processing
+instructions</termref>.</p>
+<p>An <termref def="dt-xml-model-processor">xml-model processor</termref
+> <rfc2119>must</rfc2119> process all <termref def="dt-xml-model"
+>xml-model processing instructions</termref> properly and <rfc2119
+>must</rfc2119> pass on to the <termref def="dt-application">application</termref
+> the full <xtermref href="&ASSOCSSspec;#dt-parsing-result">parsing
+result</xtermref> for each <termref def="dt-xml-model">xml-model processing
+instruction</termref>.<ednote diff="add" id="ednote2a"><name>PBG</name>
+<date>2010-03-15</date><edtext>The &#x201c;shoulds&#x201d; in this
+paragraph have been changed to &#x201c;musts&#x201d; as part of addressing <loc
+href="http://www.w3.org/XML/2010/02/xml-model-comments.html#issue-2"
+>ISSUE-2</loc></edtext></ednote></p>
+<p>An <termref def="dt-xml-model">xml-model processing instruction</termref
+> will match the following production:</p>
+<scrap lang="ebnf">
+<head>Production for xml-model processing instruction</head>
+<prodgroup>
+<prod id="NT-StyleSheetPI" num="1">
+<lhs>XmlModelPI</lhs><rhs>"&lt;?xml-model" (<xnt href="&XMLspec;#NT-S"
+>S</xnt> <xnt href="&ASSOCSSspec;#NT-PseudoAtts">PseudoAtts</xnt>)?
+- (<xnt href="&XMLspec;#NT-Char">Char</xnt>* "?>" <xnt
+href="&XMLspec;#NT-Char">Char</xnt>*) "?>"</rhs>
+</prod>
+</prodgroup></scrap>
+<p>Documents <rfc2119>may</rfc2119> specify the following <xtermref
+href="&ASSOCSSspec;#dt-pseudo-attribute">pseudo-attributes</xtermref
+> on <termref def="dt-xml-model">xml-model processing instructions</termref
+>, unless otherwise stated:</p>
+<glist>
+<gitem id="PA-href"><label><code>href</code></label>
+<def>
+<p>Specifies the location of the referenced schema. Documents <rfc2119
+>must</rfc2119> specify this <xtermref
+href="&ASSOCSSspec;#dt-pseudo-attribute">pseudo-attribute</xtermref
+>. Documents <rfc2119>must</rfc2119> set the <xtermref
+href="&ASSOCSSspec;#dt-value">value</xtermref> to a string that matches
+the grammar for &lt;IRI-reference> given in RFC 3987 <bibref
+ref="rfc3987"/>.</p>
+</def></gitem>
+<gitem id="PA-type"><label><code>type</code></label>
+<def>
+<p>Specifies the content type of the referenced schema. If unspecified,
+the <termref def="dt-xml-model-processor">xml-model processor</termref
+> should return a <xtermref href="&ASSOCSSspec;#dt-parsing-result"
+>parsing result</xtermref> that would be identical to that when the <xtermref
+href="&ASSOCSSspec;#dt-value">value</xtermref> is given as <code>application/xml</code
+>. The <xtermref href="&ASSOCSSspec;#dt-value">value</xtermref> of
+this <xtermref href="&ASSOCSSspec;#dt-pseudo-attribute" id="ednote3"
+>pseudo-attribute</xtermref> is advisory in that it is intended to
+be used by an application only when no other source of media type
+information becomes available during retrieval of the stylesheet itself.<ednote
+diff="add" id="ednote3"><name>PBG</name><date>2010-03-15</date><edtext
+>The previous sentence addresses <loc
+href="http://www.w3.org/XML/2010/02/xml-model-comments.html#issue-3"
+>ISSUE-3</loc></edtext></ednote></p>
+</def></gitem>
+<gitem id="PA-schematypens"><label><code>schematypens</code></label>
+<def>
+<p>Specifies the namespace name of the schema language in which the
+referenced schema is written. The <termref def="dt-application">application</termref
+> can use this value when determining whether it can make use of the
+referenced schema.</p>
+<ednote diff="add" id="ednote1a"><name>PBG</name><date>2010-03-15</date>
+<edtext>The &#x201c;schematypens&#x201d; pseudo-attribute has been
+added as part of addressing <loc
+href="http://www.w3.org/XML/2010/02/xml-model-comments.html#issue-1"
+>ISSUE-1</loc></edtext></ednote>
+</def></gitem>
+<gitem id="PA-encoding"><label><code>charset</code></label>
+<def>
+<p>Specifies the character encoding for the referenced schema. If
+specified, documents <rfc2119>must</rfc2119> set the <xtermref
+href="&ASSOCSSspec;#dt-value">value</xtermref> to a valid character
+encoding name, which <rfc2119>must</rfc2119> be the name or alias
+labeled as "preferred MIME name" in the IANA Character Sets registry,
+if there is one, or the encoding's name, if none of the aliases are
+so labeled <bibref ref="ianacharset"/>.</p>
+</def></gitem>
+<gitem id="PA-title"><label><code>title</code></label>
+<def>
+<p>Gives the title (or other human readable description) of the referenced
+schema. If specified, documents <rfc2119>may</rfc2119> use any string
+as the <xtermref href="&ASSOCSSspec;#dt-value">value</xtermref>.</p>
+</def></gitem>
+<gitem id="PA-group"><label><code>group</code></label>
+<def>
+<p>If, for any <termref def="dt-xml-model">xml-model processing instruction</termref
+>, its <termref def="PA-group"><phrase><code>group</code></phrase
+></termref> <xtermref href="&ASSOCSSspec;#dt-pseudo-attribute">pseudo-attribute</xtermref
+> has a non-empty <xtermref href="&ASSOCSSspec;#dt-value">value</xtermref
+>, special rules for associating schemas apply as follows:</p>
+<olist>
+<item><p>By default only schemas which do not have a <termref
+def="PA-group"><phrase><code>group</code></phrase></termref> <xtermref
+href="&ASSOCSSspec;#dt-pseudo-attribute">pseudo-attribute</xtermref
+> specified or schemas which have an empty value in the <termref
+def="PA-group"><phrase><code>group</code></phrase></termref> <xtermref
+href="&ASSOCSSspec;#dt-pseudo-attribute">pseudo-attribute</xtermref
+> on the corresponding <termref def="dt-xml-model">xml-model processing
+instruction</termref> are treated as being associated with XML document.</p>
+</item>
+<item><p>An <termref def="dt-application">application</termref> may
+provide an interface for specifying a group name. If the group name
+is specified, only schemas which have the same value specified in
+the <termref def="PA-group"><phrase><code>group</code></phrase></termref
+> <xtermref href="&ASSOCSSspec;#dt-pseudo-attribute">pseudo-attribute</xtermref
+> on the corresponding <termref def="dt-xml-model">xml-model processing
+instruction</termref> are considered to be associated with the XML
+document.</p></item>
+</olist>
+</def></gitem>
+<gitem id="PA-phase"><label><code>phase</code></label>
+<def>
+<p>Gives the phase name of the validation function for use with a
+Schematron schema. If specified, documents <rfc2119>may</rfc2119> use
+any string as the <xtermref href="&ASSOCSSspec;#dt-value">value</xtermref
+>. If specified, the <termref def="dt-xml-model-processor">xml-model
+processor</termref> <rfc2119>should</rfc2119> include this information
+in the <xtermref href="&ASSOCSSspec;#dt-parsing-result">parsing result</xtermref
+> (regardless of the language of the associated schema).</p>
+<p>If the associated schema is a Schematron schema, and the <xtermref
+href="&ASSOCSSspec;#dt-parsing-result">parsing result</xtermref> includes
+the <termref def="PA-phase"><phrase><code>phase</code></phrase></termref
+> <xtermref href="&ASSOCSSspec;#dt-pseudo-attribute">pseudo-attribute</xtermref
+>, then the <termref def="dt-application">application</termref> is
+expected to use the <xtermref href="&ASSOCSSspec;#dt-value">value</xtermref
+> of this <xtermref href="&ASSOCSSspec;#dt-pseudo-attribute">pseudo-attribute</xtermref
+> as the phase name of the validation function (see ISO/IEC 19757-3,
+Section 6.1 <bibref ref="iso-iec_19757-3_6.1"/>).</p>
+</def></gitem>
+</glist>
+<p>To allow for extensibility, documents <rfc2119>may</rfc2119> specify
+other <xtermref href="&ASSOCSSspec;#dt-pseudo-attribute">pseudo-attributes</xtermref
+> on <termref def="dt-xml-model">xml-model processing instructions</termref
+>.<ednote diff="add" id="ednote2b"><name>PBG</name><date>2010-03-15</date>
+<edtext>The &#x201c;must not&#x201d; in this paragraph has been changed
+to &#x201c;may&#x201d; as part of addressing <loc
+href="http://www.w3.org/XML/2010/02/xml-model-comments.html#issue-2"
+>ISSUE-2</loc></edtext></ednote></p>
+<p>This specification provides a way to associate multiple schemas
+with a given XML document. Furthermore, there exist other ways certain
+schemas can be associated with a given XML document. Regardless of
+the association method, this specification does not prescribe the
+processing order when multiple schemas are associated with a given
+XML document.</p>
+<p>In particular, this specification does not define the interaction
+of <termref def="dt-xml-model">xml-model processing instructions</termref
+> with <code>xsi:schemaLocation</code> and <code>xsi:noNamespaceSchemaLocation</code
+> attributes which provide hints for locating schema in W3C XML Schema.
+Applications supporting both <termref def="dt-xml-model">xml-model
+processing instructions</termref> and <code>xsi:schemaLocation/xsi:noNamespaceSchemaLocation</code
+> attributes <rfc2119>may</rfc2119> provide means for specifying which
+information takes precedence.</p>
+</div1>
+</body><back>
+<div1 id="references">
+<head>Normative References</head>
+<blist>
+<bibl href="&ASSOCSSspec;" id="assocss" key="ASSOCSS"><titleref>Associating
+Style Sheets with XML documents 1.0 (Second Edition)</titleref>. W3C, &ASSOCCSSspec-pubdate;.</bibl>
+<bibl href="http://www.iana.org/assignments/character-sets"
+id="ianacharset" key="IANACHARSET"><titleref>Character Sets</titleref
+>. IANA, May 2007.</bibl>
+<bibl href="http://www.w3.org/TR/xml-infoset/" id="infoset" key="INFOSET"
+><titleref>XML Information Set</titleref>, J. Cowan, R. Tobin. W3C,
+February 2004.</bibl>
+<bibl id="iso-iec_19757-3_6.1" key="ISO/IEC 19757-3"><titleref>ISO/IEC
+19757-3:2006. Information technology &#x2014; Document Schema Definition
+Languages (DSDL) &#x2014; Part 3: Rule-based validation &#x2014; Schematron</titleref
+>, International Organization for Standardization and International
+Electrotechnical Commission. 2006.</bibl>
+<bibl href="http://www.ietf.org/rfc/rfc2119.txt" id="rfc2119"
+key="RFC2119"><titleref>Key words for use in RFCs to Indicate Requirement
+Levels</titleref>, S. Bradner. IETF, March 1997.</bibl>
+<bibl href="http://www.ietf.org/rfc/rfc3987.txt" id="rfc3987"
+key="RFC3987"><titleref>Internationalized Resource Identifiers (IRIs)</titleref
+>, M. D&#xfc;rst, M. Suignard. IETF, January 2005.</bibl>
+<bibl href="http://www.w3.org/TR/xml/" id="xml" key="XML"><titleref
+>Extensible Markup Language</titleref>, T. Bray, J. Paoli, C. Sperberg-McQueen,
+E. Maler, F. Yergeau. W3C, November 2008.</bibl>
+</blist></div1>
+<inform-div1>
+<head>Examples</head>
+<example>
+<head>Multiple schemas associated</head>
+<eg>&lt;?xml version="1.0"?>
+&lt;?xml-model href="http://www.docbook.org/xml/5.0/rng/docbook.rng"?>
+&lt;?xml-model href="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"?>
+&lt;book xmlns="http://docbook.org/ns/docbook">
+ &#x2026;
+&lt;/book></eg>
+</example><example>
+<head>Alternative schema groups</head>
+<eg>&lt;?xml-model href="xhtml-transitional.xsd"?>
+&lt;?xml-model href="xhtml-strict.xsd" 
+   group="Strict"
+   title="Check against strict document type"?>
+&lt;?xml-model href="xhtml-strict-additional-constraints.sch" 
+   group="Strict"
+   title="Check against strict document type complex constraints"?></eg>
+</example></inform-div1>
+<inform-div1>
+<head>Suggested use of <code>schematypens</code> for determining schema
+language</head>
+<ednote diff="add" id="ednote1b"><name>PBG</name><date>2010-03-15</date>
+<edtext>This informative appendix has been added as part of addressing <loc
+href="http://www.w3.org/XML/2010/02/xml-model-comments.html#issue-1"
+>ISSUE-1</loc></edtext></ednote>
+<p>Use of a combination of <termref def="PA-schematypens">schematypens</termref
+> and <termref def="PA-type">type</termref> allows for the identification
+of many widely used schema languages as shown in the following table.</p>
+<table border="1" cellpadding="2" cellspacing="1"><colgroup><col/><col/>
+<col/></colgroup>
+<thead>
+<tr>
+<th>Schema language</th>
+<th>type</th>
+<th>schematypens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DTD</td>
+<td><code>application/xml-dtd</code></td>
+<td>unspecified</td>
+</tr>
+<tr>
+<td>W3C XML Schema</td>
+<td>unspecified or <code>application/xml</code></td>
+<td><code>http://www.w3.org/2001/XMLSchema</code></td>
+</tr>
+<tr>
+<td>RELAX NG</td>
+<td>unspecified or <code>application/xml</code></td>
+<td><code>http://relaxng.org/ns/structure/1.0</code></td>
+</tr>
+<tr>
+<td>RELAX NG &#x2013; compact syntax</td>
+<td><code>application/relax-ng-compact-syntax</code></td>
+<td>unspecified</td>
+</tr>
+<tr>
+<td>Schematron</td>
+<td>unspecified or <code>application/xml</code></td>
+<td><code>http://purl.oclc.org/dsdl/schematron</code></td>
+</tr>
+<tr>
+<td>NVDL</td>
+<td>unspecified or <code>application/xml</code></td>
+<td><code>http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0</code></td>
+</tr>
+</tbody>
+</table>
+<example>
+<head>Multiple schemas associated</head>
+<eg>&lt;?xml version="1.0"?>
+&lt;?xml-model href="http://www.docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+&lt;?xml-model href="http://www.docbook.org/xml/5.0/xsd/docbook.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+&lt;book xmlns="http://docbook.org/ns/docbook">
+ &#x2026;
+&lt;/book>
+</eg>
+</example></inform-div1>
+</back></spec>
+<?Pub *0000026018 0?>

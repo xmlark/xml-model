@@ -1,0 +1,215 @@
+
+# RNC file for ISO standards
+# Used for ISO 13250-2, -3, -4, 18048, and 19756
+
+# Some elements are specific to only certain kinds of documents, and
+# should be factored out.
+
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+start = document
+
+document = element document { head, body }
+
+head =
+  element head {
+    element organization { "ISO" | "ISO/IEC" } &
+    element document-type {
+            "International Standard"
+            | "Technical Report"
+            | "Guide"
+            | "Publicly Available Specification"
+            | "Technical Specification"
+            | "International Standardized Profile"
+    } &
+    element stage { "preparatory" | "committee" | "enquiry" | "approval" | "publication" | "committee-final" } &
+    element tc-number { positive-integer } &
+    element tc-name { text } &
+    (element sc-number { positive-integer } & element sc-name { text })? &
+    element wg-number { positive-integer }? &
+    element serial-number { positive-integer }? &
+    element draft-number { positive-integer }? &
+    element document-number { positive-integer } &
+    element part-number { positive-integer }? &
+    element document-language { "E" | "F" } &
+    element secretariat { "ANSI" | "SCC" } &
+    element date { xsd:date } &
+    element previous-date { xsd:date }? &
+    element published-at { xsd:anyURI }? &
+    element title {
+      element introductory { text }?,
+      element main { text },
+      element complementary { text }?
+    } &
+    element author { text }* &
+    element editor { text }+
+  }
+
+positive-integer = xsd:token { pattern = "[1-9][0-9]*|0" }
+
+body = foreword, introduction?, scope, normative-references?,
+       terms-and-definitions?, titled-clause+, annex*, bibliography?
+
+foreword = element foreword { part-list? }
+
+part-list = 
+  element part-list {
+    element part { element number { positive-integer },
+                   element title { text } }+
+  }
+
+title = element title { title-content }
+
+title-content = (text | element code { title-content } | el | att)*
+
+clause-content = (titled-clause, titled-clause+) | untitled-clause-content
+
+untitled-clause-content = (untitled-clause, untitled-clause+) | block+
+
+introduction = element introduction { block+ }
+scope = element scope { block+ }
+normative-references = 
+  element normative-references {
+    block*, referenced-document+
+  }
+
+referenced-document =
+  element referenced-document {
+    id,
+    element abbrev { text },
+    element title { text },
+    element field { text }*,
+    element url { xsd:anyURI }?
+  }
+
+
+# boilerplate generated automatically
+# need markup for supplementary sources of terms and definitions
+terms-and-definitions = 
+  element terms-and-definitions { id?, terms-and-definitions-content }
+
+
+terms-and-definitions-content = 
+   (note | term-and-definition | 
+    element clause { title, terms-and-definitions-content })*
+
+term-and-definition =
+    element term-and-definition {
+      element term { text },
+      element term { attribute status { text }?, text }*,
+      element definition { attribute subject-field { text }?, inline },
+      (example | note)*
+    }+
+
+titled-clause = element clause { id, title, clause-content }
+
+untitled-clause = element clause { id, untitled-clause-content }
+
+annex = 
+  element annex { id, attribute normative { "true" | "false" }, title, clause-content }
+
+bibliography = element bibliography { referenced-document+ }
+
+block = p | ol | ul | example | note | pre | notation-list | ednote | issue |
+        constraint | graphic | dl | prodlist | prod | item-type | published-subjects
+
+p = element p { attribute kind { "semantics" | "optimization" | "tentative" | "convenience" | "rationale" }?, inline }
+
+ol = element ol { element li { id, block+ }+ }
+
+ul = element ul { element li { block+ }+ }
+
+dl = element dl { ( element dt { inline }, element dd { block+ } )+ }
+
+example = element example { (p | ul | pre)+ }
+
+note = element note { p+ }
+
+notation-list =
+  element notation-list {
+    element notation-item {
+      element notation { inline },
+      element notation-definition { p }
+    }+
+  }
+       
+pre = element pre { attribute language { text }?, pre-content }
+
+pre-content = (text | element var { attribute nt { text }?, pre-content } |
+               em)*
+
+ednote = element ednote { (p | pre)+ }
+
+issue = element issue { id, p+ }
+
+constraint = element constraint { id, title, p+ }
+
+graphic = element graphic { attribute source { text },
+                            attribute title { text } }
+
+inline = (text | element code |b | i | var { inline } | ref | firstterm | strong | 
+          termdef | em | el | att )*
+
+ref = this | xref
+
+# "This part of ISO/IEC"
+# "This International Standard"
+this = element This|this { empty }
+
+xref = element Xref { attribute to { xsd:IDREF } }
+       | element xref { attribute to { xsd:IDREF } }
+
+id = attribute id { xsd:ID }?
+
+firstterm = element firstterm { text }
+
+strong = element strong { text }
+
+termdef = element termdef { termdef-content }
+
+termdef-content = (text | element term { text } | element def { inline })*
+
+em = element em { text }
+
+el = element el { text }
+
+att = element att { text }
+
+# --- move this out into a separate file later
+
+prodlist = element prodlist { prod+ }
+
+prod = element prod { (nt, grp) | (grp, grp) }
+
+grp = element grp { count?, align?, bracket?, (t | grp | nt | c | element var { attribute nt { text }?, text })+}
+count = attribute count { "optional" | "arbitrary" | "multiple" | "alternative" |
+                          "comma-separated" }
+align = attribute align { "vertical" }
+bracket = attribute bracket { "yes" | "no" }
+
+t  = element t  { text }
+nt = element nt { attribute nt { text }?, text }
+c  = element c  { text }
+
+# --- move this out into a separate file later, too
+
+item-type = element item-type { nameattr, itemdef, property+, eqrule? }
+nameattr  = attribute name { text }
+
+itemdef = element itemdef { text }
+
+property = element property { name, type, p+, compute? }
+
+name = element name { text }
+type = element type { text }
+
+compute = element compute { text }
+
+eqrule = element eqrule { block+ }
+
+
+published-subjects = element published-subjects { prefixattr }
+prefixattr  = attribute prefix { xsd:anyURI }
+
+subject = element subject { name, usage? }
+usage = element usage { text }

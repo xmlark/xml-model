@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><document><head><organization>ISO/IEC</organization><document-type>International Standard</document-type><stage>enquiry</stage><tc-number>1</tc-number><tc-name>Information Technology</tc-name><sc-number>34</sc-number><sc-name>Document Description and Processing Languages</sc-name><wg-number>1</wg-number><serial-number>0</serial-number><document-number>19757</document-number><part-number>11</part-number><document-language>E</document-language><secretariat>IPSJ/ITSCJ</secretariat><date>2010-09-10</date><title><introductory>Information Technology</introductory><main>Document Schema Definition Languages (DSDL)</main><complementary>Schema Association</complementary></title><editor>Jirka Kosek</editor></head><foreword><p><This/> is being jointly developed by W3C and ISO/IEC JTC1/SC34. 
+        The technical content of this specification and that of <xref to="xml-model"/> is expected to be identical.</p><part-list><part><number>1</number><title>Overview</title></part><part><number>2</number><title>Grammar-based validation — RELAX NG</title></part><part><number>3</number><title>Rule-based validation — Schematron</title></part><part><number>4</number><title>Namespace-based validation dispatching language — NVDL</title></part><part><number>5</number><title>Extensible Datatypes</title></part><part><number>6</number><title>Path-based integrity constraints</title></part><part><number>7</number><title>Character repertoire description language — CREPDL</title></part><part><number>8</number><title>Document schema renaming language — DSRL</title></part><part><number>9</number><title>Datatype- and namespace-aware DTDs</title></part><part><number>10</number><title>Validation management</title></part><part><number>11</number><title>Schema Association</title></part></part-list></foreword>Associating Schemas with XML documents1.0 (First Edition)NOTE-xml-model-20100415W3C Working Group Note15April2010 http://www.w3.org/TR/2010/NOTE-xml-model-20100415/ XMLhttp://www.w3.org/TR/xml-model/<introduction><p><em>(This section is non-normative.)</em></p><p>There are several document schema definition languages in common
+
+use today that can be used to specify one or more validation processes
+
+performed against Extensible Markup Language (XML) documents. Some
+
+schema languages provide their own syntax for associating schemas
+
+with documents (DTD, W3C XML Schema) and some languages (RELAX NG,
+
+Schematron) do not provide schema association mechanisms at all. The
+
+purpose of this specification is to define a common, schema-agnostic
+
+syntax for associating schema documents written in any schema definition
+
+language with a given XML document.</p><p>This specification defines the syntax and processing expectations
+
+for an xml-model processing instruction. Such processing instructions
+
+associate one or more schemas with the XML document in which they
+
+are present. The associated schemas may be written in any schema definition
+
+language. Applications can use the associated schemas for any purpose
+
+including those such as document validation, content completion in
+
+interactive editors, or creating models for data binding. Presence
+
+of an xml-model processing instruction is not in itself an instruction
+
+to any processor to validate the document, nor is it a statement that
+
+the document is not to be processed without validation. It is a declarative
+
+statement of a relationship between the document and one or more external
+
+schemas.</p><p>It should be noted that this specification is not meant as a replacement
+
+for other technologies that provide more general and indirect schema
+
+association features like NVDL and XProc. This specification is complementary
+
+technology which can be used when it is necessary to store ad-hoc
+
+schema associations directly inside XML document.</p></introduction><scope><p>This document allows schemas using any schema definition language
+
+to be associated with an XML document by including one or more processing
+
+instructions with a target of <code>xml-model</code> in the document's
+
+prolog.</p></scope><normative-references><referenced-document id="assocss"><abbrev>ASSOCSS</abbrev><title><field>Associating
+
+Style Sheets with XML documents 1.0 (Second Edition)</field></title><field>. W3C, 4 December 2009.</field><url>http://www.w3.org/XML/2009/12/xml-stylesheet/</url></referenced-document><referenced-document id="ianacharset"><abbrev>IANACHARSET</abbrev><title><field>Character Sets</field></title><field>. IANA, May 2007.</field><url>http://www.iana.org/assignments/character-sets</url></referenced-document><referenced-document id="infoset"><abbrev>INFOSET</abbrev><title><field>XML Information Set</field></title><field>, J. Cowan, R. Tobin. W3C,
+
+February 2004.</field><url>http://www.w3.org/TR/xml-infoset/</url></referenced-document><referenced-document id="iso-iec_19757-3_6.1"><abbrev>ISO/IEC 19757-3</abbrev><title><field>ISO/IEC
+
+19757-3:2006. Information technology — Document Schema Definition
+
+Languages (DSDL) — Part 3: Rule-based validation — Schematron</field></title><field>, International Organization for Standardization and International
+
+Electrotechnical Commission. 2006.</field></referenced-document><referenced-document id="rfc2119"><abbrev>RFC2119</abbrev><title><field>Key words for use in RFCs to Indicate Requirement
+
+Levels</field></title><field>, S. Bradner. IETF, March 1997.</field><url>http://www.ietf.org/rfc/rfc2119.txt</url></referenced-document><referenced-document id="rfc3987"><abbrev>RFC3987</abbrev><title><field>Internationalized Resource Identifiers (IRIs)</field></title><field>, M. Dürst, M. Suignard. IETF, January 2005.</field><url>http://www.ietf.org/rfc/rfc3987.txt</url></referenced-document><referenced-document id="xml"><abbrev>XML</abbrev><title><field>Extensible Markup Language</field></title><field>, T. Bray, J. Paoli, C. Sperberg-McQueen,
+
+E. Maler, F. Yergeau. W3C, November 2008.</field><url>http://www.w3.org/TR/xml/</url></referenced-document><referenced-document id="xml-model"><abbrev>XML-MODEL</abbrev><title>Associating Schemas with XML documents 1.0 (First Edition), </title><field>P. Grosso, </field><field>J. Kosek. </field><field>W3C, April 2010.</field><url>http://www.w3.org/TR/xml-model/</url></referenced-document></normative-references><clause><title> Conformance requirements</title><p>All diagrams, examples, and notes in this specification are non-normative,
+
+as are all sections explicitly marked non-normative. Everything else
+
+in this specification is normative.</p><constraint><title>Documents</title><p>A document is considered to conform to this specification if it
+
+satisfies all  criteria in this specification
+
+that apply to documents.</p></constraint><constraint><title>xml-model processors</title><p>XML defines an <i>application</i> as a software module which receives the information content of an
+
+XML document from an <i>XML processor</i>. <termdef>An <term>xml-model processor</term> is such an application which
+
+processes XML <i>processing instructions</i> in accordance with this specification.</termdef> </p><p>An xml-model processor may be part of a larger XML application, or may function independently. In either case, <termdef>an <term>application</term> is the consumer of the pseudo-attribute information defined in this
+
+specification.</termdef></p><p>An xml-model processor is considered to be a conforming xml-model processor if it satisfies all  criteria in this specification that apply to xml-model processors; xml-model processors do not
+
+have to check or enforce any of the constraints on documents.</p></constraint><p>This specification is defined with reference to the vocabulary
+
+for XML provided by the XML Information Set as well as the <i>rules for parsing pseudo-attributes
+
+from a string</i> as defined in the Associating Style Sheets
+
+with XML documents Recommendation <xref to="assocss"/>.</p><p>The productions in this specification use the same notation as
+
+used in the XML Recommendation. Tokens in the grammar and terms used
+
+in this specification that are not defined in this specification are
+
+defined in the XML Recommendation <xref to="xml"/> or the Associating
+
+Style Sheets <xref to="assocss"/> Recommendation.</p></clause><clause><title>The xml-model processing instruction</title><p><termdef>A processing instruction
+
+information item is said to be a <term>potential xml-model processing
+
+instruction</term> if it has the [target] property <code>xml-model</code> and it is in the [children] property of a document information item
+
+and appears before the element information item of the document information
+
+item's [children] property.</termdef></p><p>For such potential xml-model
+
+processing instructions, xml-model processors shall report to
+
+the application the <i>parsing result</i> of
+
+invoking the <i>rules for parsing
+
+pseudo-attributes from a string</i>, using the processing instruction
+
+information item's [content] property as the string.</p><p><termdef>A potential xml-model processing
+
+instruction is said to be an <term>xml-model processing
+
+instruction</term> if the <i>parsing result</i> is
+
+not an error when invoking the <i>rules for parsing pseudo-attributes from a string</i>, using
+
+the processing instruction information item's [content] property as
+
+the string.</termdef></p><p>Documents shall not use processing instruction
+
+information items with the [target] property <code>xml-model</code> if they are not xml-model processing
+
+instructions.</p><p>An xml-model processor shall process all xml-model processing instructions properly and shall pass on to the application the full <i>parsing
+
+result</i> for each xml-model processing
+
+instruction.</p><p>An xml-model processing instruction will match the following production:</p><prodlist><prod><grp>XmlModelPI</grp><grp>"&lt;?xml-model" (<nt>S</nt> <nt>PseudoAtts</nt>)?
+
+- (<nt>Char</nt>* "?&gt;" <nt>Char</nt>*) "?&gt;"</grp></prod></prodlist><p>Documents may specify the following <i>pseudo-attributes</i> on xml-model processing instructions, unless otherwise stated:</p><constraint><title><code>href</code></title><p>Specifies the location of the referenced schema. Documents shall specify this <i>pseudo-attribute</i>. Documents shall set the <i>value</i> to a string that matches
+
+the grammar for &lt;IRI-reference&gt; given in RFC 3987 <xref to="rfc3987"/>.</p></constraint><constraint><title><code>type</code></title><p>Specifies the content type of the referenced schema. If unspecified,
+
+the xml-model processor should return a <i>parsing result</i> that would be identical to that when the <i>value</i> is given as <code>application/xml</code>. The <i>value</i> of
+
+this <i>pseudo-attribute</i> is advisory in that it is intended to
+
+be used by an application only when no other source of media type
+
+information becomes available during retrieval of the stylesheet itself.</p></constraint><constraint><title><code>schematypens</code></title><p>Specifies the namespace name of the schema language in which the
+
+referenced schema is written. The application can use this value when determining whether it can make use of the
+
+referenced schema.</p></constraint><constraint><title><code>charset</code></title><p>Specifies the character encoding for the referenced schema. If
+
+specified, documents shall set the <i>value</i> to a valid character
+
+encoding name, which shall be the name or alias
+
+labeled as "preferred MIME name" in the IANA Character Sets registry,
+
+if there is one, or the encoding's name, if none of the aliases are
+
+so labeled <xref to="ianacharset"/>.</p></constraint><constraint><title><code>title</code></title><p>Gives the title (or other human readable description) of the referenced
+
+schema. If specified, documents may use any string
+
+as the <i>value</i>.</p></constraint><constraint><title><code>group</code></title><p>If, for any xml-model processing instruction, its <code>group</code> <i>pseudo-attribute</i> has a non-empty <i>value</i>, special rules for associating schemas apply as follows:</p><ol><li><p>By default only schemas which do not have a <code>group</code> <i>pseudo-attribute</i> specified or schemas which have an empty value in the <code>group</code> <i>pseudo-attribute</i> on the corresponding xml-model processing
+
+instruction are treated as being associated with XML document.</p></li><li><p>An application may
+
+provide an interface for specifying a group name. If the group name
+
+is specified, only schemas which have the same value specified in
+
+the <code>group</code> <i>pseudo-attribute</i> on the corresponding xml-model processing
+
+instruction are considered to be associated with the XML
+
+document.</p></li></ol></constraint><constraint><title><code>phase</code></title><p>Gives the phase name of the validation function for use with a
+
+Schematron schema. If specified, documents may use
+
+any string as the <i>value</i>. If specified, the xml-model
+
+processor should include this information
+
+in the <i>parsing result</i> (regardless of the language of the associated schema).</p><p>If the associated schema is a Schematron schema, and the <i>parsing result</i> includes
+
+the <code>phase</code> <i>pseudo-attribute</i>, then the application is
+
+expected to use the <i>value</i> of this <i>pseudo-attribute</i> as the phase name of the validation function (see ISO/IEC 19757-3,
+
+Section 6.1 <xref to="iso-iec_19757-3_6.1"/>).</p></constraint><p>To allow for extensibility, documents may specify
+
+other <i>pseudo-attributes</i> on xml-model processing instructions.</p><p>This specification provides a way to associate multiple schemas
+
+with a given XML document. Furthermore, there exist other ways certain
+
+schemas can be associated with a given XML document. Regardless of
+
+the association method, this specification does not prescribe the
+
+processing order when multiple schemas are associated with a given
+
+XML document.</p><p>In particular, this specification does not define the interaction
+
+of xml-model processing instructions with <code>xsi:schemaLocation</code> and <code>xsi:noNamespaceSchemaLocation</code> attributes which provide hints for locating schema in W3C XML Schema.
+
+Applications supporting both xml-model
+
+processing instructions and <code>xsi:schemaLocation/xsi:noNamespaceSchemaLocation</code> attributes may provide means for specifying which
+
+information takes precedence.</p></clause><annex normative="false"><title>Examples</title><example><p><i>Multiple schemas associated</i></p><pre>&lt;?xml version="1.0"?&gt;
+&lt;?xml-model href="http://www.docbook.org/xml/5.0/rng/docbook.rng"?&gt;
+&lt;?xml-model href="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"?&gt;
+&lt;book xmlns="http://docbook.org/ns/docbook"&gt;
+ …
+&lt;/book&gt;</pre></example><example><p><i>Alternative schema groups</i></p><pre>&lt;?xml-model href="xhtml-transitional.xsd"?&gt;
+&lt;?xml-model href="xhtml-strict.xsd" 
+   group="Strict"
+   title="Check against strict document type"?&gt;
+&lt;?xml-model href="xhtml-strict-additional-constraints.sch" 
+   group="Strict"
+   title="Check against strict document type complex constraints"?&gt;</pre></example></annex><annex normative="false"><title>Suggested use of <code>schematypens</code> for determining schema
+
+language</title><p>Use of a combination of schematypens and type allows for the identification
+
+of many widely used schema languages as shown in the following table.</p><table border="1" cellpadding="2" cellspacing="1"><colgroup span="1"><col span="1"/><col span="1"/><col span="1"/></colgroup><thead><tr><th rowspan="1" colspan="1">Schema language</th><th rowspan="1" colspan="1">type</th><th rowspan="1" colspan="1">schematypens</th></tr></thead><tbody><tr><td rowspan="1" colspan="1">DTD</td><td rowspan="1" colspan="1"><code>application/xml-dtd</code></td><td rowspan="1" colspan="1">unspecified</td></tr><tr><td rowspan="1" colspan="1">W3C XML Schema</td><td rowspan="1" colspan="1">unspecified or <code>application/xml</code></td><td rowspan="1" colspan="1"><code>http://www.w3.org/2001/XMLSchema</code></td></tr><tr><td rowspan="1" colspan="1">RELAX NG</td><td rowspan="1" colspan="1">unspecified or <code>application/xml</code></td><td rowspan="1" colspan="1"><code>http://relaxng.org/ns/structure/1.0</code></td></tr><tr><td rowspan="1" colspan="1">RELAX NG – compact syntax</td><td rowspan="1" colspan="1"><code>application/relax-ng-compact-syntax</code></td><td rowspan="1" colspan="1">unspecified</td></tr><tr><td rowspan="1" colspan="1">Schematron</td><td rowspan="1" colspan="1">unspecified or <code>application/xml</code></td><td rowspan="1" colspan="1"><code>http://purl.oclc.org/dsdl/schematron</code></td></tr><tr><td rowspan="1" colspan="1">NVDL</td><td rowspan="1" colspan="1">unspecified or <code>application/xml</code></td><td rowspan="1" colspan="1"><code>http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0</code></td></tr></tbody></table><example><p><i>Multiple schemas associated</i></p><pre>&lt;?xml version="1.0"?&gt;
+&lt;?xml-model href="http://www.docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?&gt;
+&lt;?xml-model href="http://www.docbook.org/xml/5.0/xsd/docbook.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?&gt;
+&lt;book xmlns="http://docbook.org/ns/docbook"&gt;
+ …
+&lt;/book&gt;
+</pre></example></annex></document>
